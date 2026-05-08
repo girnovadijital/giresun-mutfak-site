@@ -48,11 +48,12 @@ export default function HakkimizdaPage() {
             <div>
               <Placeholder
                 label="Atölye · Giresun"
-                wood={true}
+                src="https://images.unsplash.com/photo-1774200981075-a728eaaa3824?auto=format&fit=crop&w=900&q=80"
                 style={{ height: 520, borderRadius: 4, marginBottom: 16 }}
               />
               <Placeholder
                 label="Ekip · 2024"
+                src="https://images.unsplash.com/photo-1692133186528-c1c42edd5a5c?auto=format&fit=crop&w=900&q=80"
                 style={{ height: 220, borderRadius: 4 }}
               />
             </div>
@@ -130,7 +131,7 @@ export default function HakkimizdaPage() {
             </div>
             <Placeholder
               label="Showroom · Giresun"
-              wood={true}
+              src="https://images.unsplash.com/photo-1646592472504-d4a42297d4c3?auto=format&fit=crop&w=900&q=80"
               style={{ height: 400, borderRadius: 4 }}
             />
           </div>

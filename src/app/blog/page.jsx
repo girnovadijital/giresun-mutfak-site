@@ -16,8 +16,7 @@ const posts = [
     excerpt: 'İkisi de parlak, ikisi de modern görünüyor — ama bakımı, dayanıklılığı ve fiyatı çok farklı. Karadeniz iklimine hangisi daha uygun?',
     date: 'Nisan 2025',
     readTime: '5 dk',
-    large: true,
-    wood: true,
+    src: 'https://images.unsplash.com/photo-1764526624453-db32c24eca55?auto=format&fit=crop&w=1200&q=80',
   },
   {
     cat: 'Tadilat',
@@ -25,7 +24,7 @@ const posts = [
     excerpt: 'Tesisat dahil mi? Elektrik yeterliliği kontrol edildi mi? Süre gerçekçi mi? Pişmanlıkları önleyecek sorular.',
     date: 'Mart 2025',
     readTime: '4 dk',
-    large: false,
+    src: 'https://images.unsplash.com/photo-1602028617950-0ed35e50e460?auto=format&fit=crop&w=700&q=80',
   },
   {
     cat: 'Tasarım',
@@ -33,8 +32,7 @@ const posts = [
     excerpt: "Ada modülü şart değil. Doğru çekmece, köşe dolabı ve raf sistemiyle 8 m²'ye çok şey sığar.",
     date: 'Şubat 2025',
     readTime: '6 dk',
-    large: false,
-    dark: true,
+    src: 'https://images.unsplash.com/photo-1593136573819-c3b57b8caf29?auto=format&fit=crop&w=700&q=80',
   },
   {
     cat: 'Malzeme',
@@ -42,7 +40,7 @@ const posts = [
     excerpt: 'Fiyat, hijyen, ısıya dayanıklılık ve bakım açısından üç popüler tezgâh malzemesini karşılaştırıyoruz.',
     date: 'Ocak 2025',
     readTime: '7 dk',
-    large: false,
+    src: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=700&q=80',
   },
   {
     cat: 'İlham',
@@ -50,8 +48,7 @@ const posts = [
     excerpt: 'Zeytini, antrasit, krem ve orman yeşili — bu yıl öne çıkan renk paletlerini gerçek projelerle inceliyoruz.',
     date: 'Ocak 2025',
     readTime: '4 dk',
-    large: false,
-    wood: true,
+    src: 'https://images.unsplash.com/photo-1759239572496-4ec13e7643d6?auto=format&fit=crop&w=700&q=80',
   },
 ]
 
@@ -79,7 +76,7 @@ export default function BlogPage() {
           <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 56, alignItems: 'center', borderTop: '1px solid var(--c-line)', paddingTop: 56 }}>
             <Placeholder
               label={featured.title}
-              wood={featured.wood}
+              src={featured.src}
               style={{ height: 480, borderRadius: 4 }}
             />
             <div>
@@ -108,8 +105,7 @@ export default function BlogPage() {
               <div key={i} style={{ borderTop: '1px solid var(--c-line)', paddingTop: 32 }}>
                 <Placeholder
                   label={p.title}
-                  wood={p.wood}
-                  dark={p.dark}
+                  src={p.src}
                   style={{ height: 220, borderRadius: 4, marginBottom: 20 }}
                 />
                 <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 12 }}>

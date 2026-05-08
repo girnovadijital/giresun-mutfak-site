@@ -23,8 +23,7 @@ const services = [
       'İtalyan ve yerli menteşe alternatifleri',
       '5 yıla kadar garanti seçenekleri',
     ],
-    wood: true,
-    dark: false,
+    src: 'https://images.unsplash.com/photo-1646592472504-d4a42297d4c3?auto=format&fit=crop&w=900&q=80',
   },
   {
     n: '02',
@@ -38,8 +37,7 @@ const services = [
       'Zemin ve duvar kaplama',
       'Anahtar teslim tadilat',
     ],
-    wood: false,
-    dark: false,
+    src: 'https://images.unsplash.com/photo-1602028617950-0ed35e50e460?auto=format&fit=crop&w=900&q=80',
   },
   {
     n: '03',
@@ -53,8 +51,7 @@ const services = [
       'Yerleşim ve ergonomi planlaması',
       'Revizyonsuz sunum garantisi',
     ],
-    wood: false,
-    dark: true,
+    src: 'https://images.unsplash.com/photo-1682888813788-bf57c360123e?auto=format&fit=crop&w=900&q=80',
   },
   {
     n: '04',
@@ -65,11 +62,10 @@ const services = [
       'Tek sözleşme, tek bütçe',
       'Mutfak + banyo + dolap paketi',
       'Proje yöneticisi atanması',
-      'WhatsApp\'tan canlı takip',
+      "WhatsApp'tan canlı takip",
       '2 yıl işçilik garantisi',
     ],
-    wood: false,
-    dark: false,
+    src: 'https://images.unsplash.com/photo-1682888813726-24adc990e6f7?auto=format&fit=crop&w=900&q=80',
   },
 ]
 
@@ -125,8 +121,7 @@ export default function HizmetlerPage() {
               <div>
                 <Placeholder
                   label={s.title}
-                  wood={s.wood}
-                  dark={s.dark}
+                  src={s.src}
                   style={{ height: 400, borderRadius: 4 }}
                 />
               </div>

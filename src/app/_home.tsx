@@ -47,6 +47,7 @@ function HomeHero() {
       <div className="g-hero-img">
         <Placeholder
           label="HERO · Doğal ahşap + mat antrasit ada mutfak"
+          src="https://images.unsplash.com/photo-1764526624453-db32c24eca55?auto=format&fit=crop&w=1200&q=80"
           style={{ height: '100%', minHeight: 520, borderRadius: 4 }}
         />
       </div>
@@ -109,9 +110,9 @@ function ServicesSection() {
 function ProjectShowcase() {
   const [active, setActive] = useState(0)
   const items = [
-    { title: 'Aksu Apartmanı', meta: 'Modern · 14 m²',      label: 'Mat antrasit + meşe',    wood: true,  dark: false },
-    { title: 'Çamlık Villası', meta: 'Klasik · 22 m²',      label: 'Lake beyaz, ada modülü', wood: false, dark: false },
-    { title: 'Bulancak Sahil', meta: 'Endüstriyel · 11 m²', label: 'Dökme beton + ahşap',   wood: false, dark: true  },
+    { title: 'Aksu Apartmanı', meta: 'Modern · 14 m²',      label: 'Mat antrasit + meşe',    src: 'https://images.unsplash.com/photo-1692133186528-c1c42edd5a5c?auto=format&fit=crop&w=900&q=80' },
+    { title: 'Çamlık Villası', meta: 'Klasik · 22 m²',      label: 'Lake beyaz, ada modülü', src: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=700&q=80' },
+    { title: 'Bulancak Sahil', meta: 'Endüstriyel · 11 m²', label: 'Dökme beton + ahşap',   src: 'https://images.unsplash.com/photo-1724217600569-a5547860a433?auto=format&fit=crop&w=700&q=80' },
   ]
   return (
     <section className="s-xl" style={{ background: 'var(--c-paper-2)' }}>
@@ -136,7 +137,7 @@ function ProjectShowcase() {
           {items.map((p, i) => (
             <div key={i} onClick={() => setActive(i)}
               style={{ cursor: 'pointer', transform: i === active ? 'translateY(-4px)' : 'none', transition: 'transform 300ms ease' }}>
-              <Placeholder label={p.label} wood={p.wood} dark={p.dark}
+              <Placeholder label={p.label} src={p.src}
                 style={{ height: i === 0 ? 540 : 420, marginBottom: 16 }} />
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <div className="display" style={{ fontSize: 22 }}>{p.title}</div>
