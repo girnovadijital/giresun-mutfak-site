@@ -47,6 +47,18 @@ export const settings = defineType({
       type: 'string',
       placeholder: '500+',
     }),
+    defineField({
+      name: 'heroImages',
+      title: 'Slider Görseller',
+      description: 'Ana sayfada hero bölümünde gösterilecek mutfak görselleri (önerilen: 3–5 adet)',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true },
+        },
+      ],
+    }),
   ],
   preview: {
     prepare: () => ({ title: 'Site Ayarları' }),

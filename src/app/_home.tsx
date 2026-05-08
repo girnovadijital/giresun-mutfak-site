@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import NavBar from '@/components/NavBar'
 import Footer from '@/components/Footer'
@@ -8,49 +8,121 @@ import Placeholder from '@/components/Placeholder'
 import CtaBand from '@/components/CtaBand'
 import { WhatsAppIcon, ArrowIcon } from '@/components/Icons'
 
+/* ── Hero Slider ── */
+function HeroSlider({ images }: { images: string[] }) {
+  const [cur, setCur] = useState(0)
+
+  useEffect(() => {
+    if (images.length <= 1) return
+    const t = setInterval(() => setCur(c => (c + 1) % images.length), 5000)
+    return () => clearInterval(t)
+  }, [images.length])
+
+  const prev = () => setCur(c => (c - 1 + images.length) % images.length)
+  const next = () => setCur(c => (c + 1) % images.length)
+
+  return (
+    <div style={{ position: 'relative', height: '100%', minHeight: 520, borderRadius: 4, overflow: 'hidden' }}>
+      {images.map((src, i) => (
+        <img key={i} src={src} alt="Mutfak görseli"
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%',
+            objectFit: 'cover',
+            opacity: i === cur ? 1 : 0,
+            transition: 'opacity 700ms ease',
+          }}
+        />
+      ))}
+
+      {images.length > 1 && (
+        <>
+          {/* Sol ok */}
+          <button onClick={prev} aria-label="Önceki" style={{
+            position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)',
+            width: 40, height: 40, borderRadius: 999, border: 'none',
+            background: 'rgba(255,255,255,0.88)', cursor: 'pointer', zIndex: 2,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+          }}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M12 7H2M6 11L2 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+
+          {/* Sağ ok */}
+          <button onClick={next} aria-label="Sonraki" style={{
+            position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
+            width: 40, height: 40, borderRadius: 999, border: 'none',
+            background: 'rgba(255,255,255,0.88)', cursor: 'pointer', zIndex: 2,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+          }}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+
+          {/* Noktalar */}
+          <div style={{
+            position: 'absolute', bottom: 18, left: '50%', transform: 'translateX(-50%)',
+            display: 'flex', gap: 8, zIndex: 2,
+          }}>
+            {images.map((_, i) => (
+              <button key={i} onClick={() => setCur(i)} aria-label={`Görsel ${i + 1}`}
+                style={{
+                  width: i === cur ? 28 : 8, height: 8, borderRadius: 999,
+                  background: i === cur ? '#fff' : 'rgba(255,255,255,0.55)',
+                  border: 'none', cursor: 'pointer', padding: 0,
+                  transition: 'all 350ms ease',
+                }}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
 /* ── Hero ── */
-function HomeHero() {
+function HomeHero({ heroImages }: { heroImages: string[] }) {
   return (
     <section>
       <div className="mxw g-hero">
-      <div className="g-hero-txt">
-        <div className="eyebrow" style={{ marginBottom: 28 }}>
-          <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--c-mute)', verticalAlign: 'middle', marginRight: 12 }} />
-          Giresun · 2011'den beri
+        <div className="g-hero-txt">
+          <div className="eyebrow" style={{ marginBottom: 28 }}>
+            <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--c-mute)', verticalAlign: 'middle', marginRight: 12 }} />
+            Giresun · 2011'den beri
+          </div>
+          <h1 className="display t-hero">
+            Giresun'da<br />
+            hayalinizdeki<br />
+            <span className="h-script" style={{ color: 'var(--c-wood-deep)' }}>mutfağı</span> tasarlıyoruz.
+          </h1>
+          <p style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--c-ink-soft)', maxWidth: 440, marginBottom: 36 }}>
+            Ölçü alımından montaja kadar tek elden, ustalıkla. Özel tasarım mutfak dolapları,
+            tadilat ve anahtar teslim projeler — Karadeniz'in iklimine ve evinize göre.
+          </p>
+          <div style={{ display: 'flex', gap: 12, marginBottom: 36, flexWrap: 'wrap' }}>
+            <a href="https://wa.me/904540000000" target="_blank" rel="noopener noreferrer" className="btn btn-wa">
+              <WhatsAppIcon size={18} /> WhatsApp'tan Yaz
+            </a>
+            <Link href="/iletisim" className="btn btn-ghost">
+              Ücretsiz Keşif Al <ArrowIcon />
+            </Link>
+          </div>
+          <div style={{ display: 'flex', gap: 32, paddingTop: 28, borderTop: '1px solid var(--c-line)' }}>
+            {[['500+', 'teslim mutfak'], ['14 yıl', 'ustalık'], ['2 yıl', 'garanti']].map(([n, l]) => (
+              <div key={l}>
+                <div className="serif" style={{ fontSize: 22 }}>{n}</div>
+                <div className="muted" style={{ fontSize: 11 }}>{l}</div>
+              </div>
+            ))}
+          </div>
         </div>
-        <h1 className="display t-hero">
-          Giresun'da<br />
-          hayalinizdeki<br />
-          <span className="h-script" style={{ color: 'var(--c-wood-deep)' }}>mutfağı</span> tasarlıyoruz.
-        </h1>
-        <p style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--c-ink-soft)', maxWidth: 440, marginBottom: 36 }}>
-          Ölçü alımından montaja kadar tek elden, ustalıkla. Özel tasarım mutfak dolapları,
-          tadilat ve anahtar teslim projeler — Karadeniz'in iklimine ve evinize göre.
-        </p>
-        <div style={{ display: 'flex', gap: 12, marginBottom: 36, flexWrap: 'wrap' }}>
-          <a href="https://wa.me/904540000000" target="_blank" rel="noopener noreferrer" className="btn btn-wa">
-            <WhatsAppIcon size={18} /> WhatsApp'tan Yaz
-          </a>
-          <Link href="/iletisim" className="btn btn-ghost">
-            Ücretsiz Keşif Al <ArrowIcon />
-          </Link>
+        <div className="g-hero-img">
+          <HeroSlider images={heroImages} />
         </div>
-        <div style={{ display: 'flex', gap: 32, paddingTop: 28, borderTop: '1px solid var(--c-line)' }}>
-          {[['500+', 'teslim mutfak'], ['14 yıl', 'ustalık'], ['2 yıl', 'garanti']].map(([n, l]) => (
-            <div key={l}>
-              <div className="serif" style={{ fontSize: 22 }}>{n}</div>
-              <div className="muted" style={{ fontSize: 11 }}>{l}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="g-hero-img">
-        <Placeholder
-          label="HERO · Doğal ahşap + mat antrasit ada mutfak"
-          src="https://images.unsplash.com/photo-1764526624453-db32c24eca55?auto=format&fit=crop&w=1200&q=80"
-          style={{ height: '100%', minHeight: 520, borderRadius: 4 }}
-        />
-      </div>
       </div>
     </section>
   )
@@ -138,7 +210,7 @@ function ProjectShowcase() {
             <div key={i} onClick={() => setActive(i)}
               style={{ cursor: 'pointer', transform: i === active ? 'translateY(-4px)' : 'none', transition: 'transform 300ms ease' }}>
               <Placeholder label={p.label} src={p.src}
-                style={{ height: i === 0 ? 540 : 420, marginBottom: 16 }} />
+                style={{ height: i === 0 ? 480 : 380, marginBottom: 16 }} />
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <div className="display" style={{ fontSize: 22 }}>{p.title}</div>
                 <div className="mono muted" style={{ fontSize: 11 }}>{p.meta}</div>
@@ -193,7 +265,7 @@ function ProcessSection() {
   )
 }
 
-/* ── Yorumlar (Sanity'den) ── */
+/* ── Yorumlar ── */
 function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
   return (
     <section className="s-xl" style={{ background: 'var(--c-ink)', color: 'var(--c-paper)' }}>
@@ -228,11 +300,11 @@ function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
 }
 
 /* ── Ana Sayfa ── */
-export default function HomeClient({ testimonials }: { testimonials: any[] }) {
+export default function HomeClient({ testimonials, heroImages }: { testimonials: any[], heroImages: string[] }) {
   return (
     <div className="page">
       <NavBar />
-      <HomeHero />
+      <HomeHero heroImages={heroImages} />
       <ServicesSection />
       <ProjectShowcase />
       <ProcessSection />

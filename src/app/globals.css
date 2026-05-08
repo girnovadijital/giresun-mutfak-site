@@ -162,7 +162,7 @@ img { max-width: 100%; display: block; }
 .nav-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 32px;
+  padding: 18px 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -311,6 +311,7 @@ img { max-width: 100%; display: block; }
   .t-page     { font-size: 50px; }
   .t-cta      { font-size: 44px; }
   .t-h2       { font-size: 36px; }
+  .nav-inner  { padding: 18px 40px; }
   .s-xl       { padding: 88px 40px; }
   .s-lg       { padding: 64px 40px 32px; }
   .s-md       { padding: 24px 40px 72px; }

@@ -1,5 +1,5 @@
 import { client } from '@/sanity/lib/client'
-import { testimonialsQuery } from '@/sanity/lib/queries'
+import { testimonialsQuery, settingsQuery } from '@/sanity/lib/queries'
 import HomeClient from './_home'
 
 const FALLBACK_TESTIMONIALS = [
@@ -8,16 +8,31 @@ const FALLBACK_TESTIMONIALS = [
   { _id: '3', quote: 'Apartmana taşınırken zaman çok azdı. 8 gün içinde mutfağı bitirdiler, montajda hiçbir aksaklık çıkmadı.', name: 'Hakan D.', location: 'Aksu Mah.', rating: 5 },
 ]
 
+const FALLBACK_HERO_IMAGES = [
+  'https://images.unsplash.com/photo-1764526624453-db32c24eca55?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1692133186528-c1c42edd5a5c?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=80',
+]
+
 export default async function HomePage() {
-  let testimonials = []
+  let testimonials: any[] = []
+  let heroImages: string[] = []
 
   try {
-    testimonials = await client.fetch(testimonialsQuery)
+    const [t, settings] = await Promise.all([
+      client.fetch(testimonialsQuery),
+      client.fetch(settingsQuery),
+    ])
+    testimonials = t || []
+    heroImages = settings?.heroImages?.filter(Boolean) || []
   } catch {
     // Sanity bağlantısı yoksa fallback kullan
   }
 
-  const finalTestimonials = testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS
-
-  return <HomeClient testimonials={finalTestimonials} />
+  return (
+    <HomeClient
+      testimonials={testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS}
+      heroImages={heroImages.length > 0 ? heroImages : FALLBACK_HERO_IMAGES}
+    />
+  )
 }

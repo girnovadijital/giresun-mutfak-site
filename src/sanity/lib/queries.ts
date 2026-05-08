@@ -41,6 +41,7 @@ export const settingsQuery = groq`
     address,
     workingHours,
     foundedYear,
-    projectCount
+    projectCount,
+    "heroImages": heroImages[].asset->url
   }
 `
