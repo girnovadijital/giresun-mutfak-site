@@ -279,6 +279,28 @@ img { max-width: 100%; display: block; }
 .mxw { max-width: 1200px; margin: 0 auto; }
 .mxw-sm { max-width: 900px; margin: 0 auto; }
 
+/* ── Sayfa içi grid'ler (hizmetler, hakkımızda) ── */
+.srv-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 72px 0;
+  border-top: 1px solid var(--c-line);
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 96px;
+  align-items: flex-start;
+}
+.about-loc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
 /* ══════════════════════════════
    TABLET  (max 1024px)
    ══════════════════════════════ */
@@ -355,4 +377,9 @@ img { max-width: 100%; display: block; }
     border-top: 1px solid var(--c-line);
     border-bottom: none !important;
   }
+
+  /* Sayfa içi grid'ler */
+  .srv-row        { grid-template-columns: 1fr; gap: 32px; padding: 40px 0; }
+  .about-grid     { grid-template-columns: 1fr; gap: 40px; }
+  .about-loc-grid { grid-template-columns: 1fr; gap: 40px; }
 }
