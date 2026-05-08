@@ -52,7 +52,7 @@ img { max-width: 100%; display: block; }
   font-family: var(--f-display);
   font-weight: 400;
   letter-spacing: -0.02em;
-  line-height: 0.98;
+  line-height: 1.05;
 }
 .h-script { font-style: italic; font-family: var(--f-display); font-weight: 400; }
 
@@ -249,15 +249,15 @@ img { max-width: 100%; display: block; }
 .s-map { padding: 0 64px 120px; }
 
 /* ── Title size classes ── */
-.t-hero { font-size: 84px; margin-bottom: 32px; letter-spacing: -0.03em; }
-.t-page { font-size: 88px; letter-spacing: -0.03em; max-width: 900px; }
-.t-h2   { font-size: 56px; }
-.t-cta  { font-size: 72px; letter-spacing: -0.03em; margin-bottom: 32px; }
+.t-hero { font-size: 62px; margin-bottom: 28px; letter-spacing: -0.03em; }
+.t-page { font-size: 68px; letter-spacing: -0.03em; max-width: 900px; }
+.t-h2   { font-size: 46px; }
+.t-cta  { font-size: 56px; letter-spacing: -0.03em; margin-bottom: 28px; }
 
 /* ── Grid layout classes ── */
-.g-hero     { display: flex; align-items: stretch; min-height: 720px; }
-.g-hero-txt { flex: 1; padding: 96px 64px; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
-.g-hero-img { flex: 1; padding: 24px 24px 24px 0; min-width: 0; }
+.g-hero     { display: flex; align-items: stretch; min-height: 560px; }
+.g-hero-txt { flex: 1; padding: 64px 64px; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+.g-hero-img { flex: 1; padding: 20px 20px 20px 0; min-width: 0; }
 
 .g-4        { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--c-line); }
 .g-3        { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
@@ -307,10 +307,10 @@ img { max-width: 100%; display: block; }
 @media (max-width: 1024px) {
   .g-4        { grid-template-columns: repeat(2, 1fr); }
   .g-footer   { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .t-hero     { font-size: 64px; }
-  .t-page     { font-size: 64px; }
-  .t-cta      { font-size: 56px; }
-  .t-h2       { font-size: 44px; }
+  .t-hero     { font-size: 48px; }
+  .t-page     { font-size: 50px; }
+  .t-cta      { font-size: 44px; }
+  .t-h2       { font-size: 36px; }
   .s-xl       { padding: 88px 40px; }
   .s-lg       { padding: 64px 40px 32px; }
   .s-md       { padding: 24px 40px 72px; }

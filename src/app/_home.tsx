@@ -23,11 +23,11 @@ function HomeHero() {
           hayalinizdeki<br />
           <span className="h-script" style={{ color: 'var(--c-wood-deep)' }}>mutfağı</span> tasarlıyoruz.
         </h1>
-        <p style={{ fontSize: 17, lineHeight: 1.55, color: 'var(--c-ink-soft)', maxWidth: 460, marginBottom: 40 }}>
+        <p style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--c-ink-soft)', maxWidth: 440, marginBottom: 36 }}>
           Ölçü alımından montaja kadar tek elden, ustalıkla. Özel tasarım mutfak dolapları,
           tadilat ve anahtar teslim projeler — Karadeniz'in iklimine ve evinize göre.
         </p>
-        <div style={{ display: 'flex', gap: 12, marginBottom: 48, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 12, marginBottom: 36, flexWrap: 'wrap' }}>
           <a href="https://wa.me/904540000000" target="_blank" rel="noopener noreferrer" className="btn btn-wa">
             <WhatsAppIcon size={18} /> WhatsApp'tan Yaz
           </a>
@@ -35,11 +35,11 @@ function HomeHero() {
             Ücretsiz Keşif Al <ArrowIcon />
           </Link>
         </div>
-        <div style={{ display: 'flex', gap: 32, paddingTop: 32, borderTop: '1px solid var(--c-line)' }}>
+        <div style={{ display: 'flex', gap: 32, paddingTop: 28, borderTop: '1px solid var(--c-line)' }}>
           {[['500+', 'teslim mutfak'], ['14 yıl', 'ustalık'], ['2 yıl', 'garanti']].map(([n, l]) => (
             <div key={l}>
-              <div className="serif" style={{ fontSize: 28 }}>{n}</div>
-              <div className="muted" style={{ fontSize: 12 }}>{l}</div>
+              <div className="serif" style={{ fontSize: 22 }}>{n}</div>
+              <div className="muted" style={{ fontSize: 11 }}>{l}</div>
             </div>
           ))}
         </div>
@@ -47,7 +47,7 @@ function HomeHero() {
       <div className="g-hero-img">
         <Placeholder
           label="HERO · Doğal ahşap + mat antrasit ada mutfak"
-          style={{ height: '100%', minHeight: 720, borderRadius: 4 }}
+          style={{ height: '100%', minHeight: 520, borderRadius: 4 }}
         />
       </div>
       </div>
