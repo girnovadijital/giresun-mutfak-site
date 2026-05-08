@@ -11,7 +11,8 @@ import { WhatsAppIcon, ArrowIcon } from '@/components/Icons'
 /* ── Hero ── */
 function HomeHero() {
   return (
-    <section className="g-hero">
+    <section>
+      <div className="mxw g-hero">
       <div className="g-hero-txt">
         <div className="eyebrow" style={{ marginBottom: 28 }}>
           <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--c-mute)', verticalAlign: 'middle', marginRight: 12 }} />
@@ -48,6 +49,7 @@ function HomeHero() {
           label="HERO · Doğal ahşap + mat antrasit ada mutfak"
           style={{ height: '100%', minHeight: 720, borderRadius: 4 }}
         />
+      </div>
       </div>
     </section>
   )

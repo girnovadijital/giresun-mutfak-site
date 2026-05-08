@@ -22,29 +22,31 @@ export default function NavBar() {
   return (
     <>
       <div className="nav">
-        <Logo />
+        <div className="nav-inner">
+          <Logo />
 
-        {/* Desktop menü */}
-        <nav className="nav-links">
-          {links.map(l => (
-            <Link key={l.href} href={l.href} className={pathname === l.href ? 'active' : ''}>
-              {l.label}
+          {/* Desktop menü */}
+          <nav className="nav-links">
+            {links.map(l => (
+              <Link key={l.href} href={l.href} className={pathname === l.href ? 'active' : ''}>
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Desktop sağ taraf */}
+          <div className="nav-actions">
+            <span className="mono" style={{ fontSize: 12, color: 'var(--c-mute)' }}>+90 454 000 00 00</span>
+            <Link href="/iletisim" className="btn btn-ink">
+              Ücretsiz Keşif <ArrowIcon />
             </Link>
-          ))}
-        </nav>
+          </div>
 
-        {/* Desktop sağ taraf */}
-        <div className="nav-actions">
-          <span className="mono" style={{ fontSize: 12, color: 'var(--c-mute)' }}>+90 454 000 00 00</span>
-          <Link href="/iletisim" className="btn btn-ink">
-            Ücretsiz Keşif <ArrowIcon />
-          </Link>
+          {/* Hamburger butonu (sadece mobilde görünür) */}
+          <button className="nav-hamburger" onClick={() => setOpen(true)} aria-label="Menüyü aç">
+            <span /><span />
+          </button>
         </div>
-
-        {/* Hamburger butonu (sadece mobilde görünür) */}
-        <button className="nav-hamburger" onClick={() => setOpen(true)} aria-label="Menüyü aç">
-          <span /><span />
-        </button>
       </div>
 
       {/* Mobil tam ekran menü */}

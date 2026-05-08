@@ -153,15 +153,19 @@ img { max-width: 100%; display: block; }
 
 /* ── Nav bar ── */
 .nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 32px;
   border-bottom: 1px solid var(--c-line);
   background: var(--c-paper);
   position: sticky;
   top: 0;
   z-index: 40;
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .nav .brand {
   font-family: var(--f-display);
@@ -299,7 +303,7 @@ img { max-width: 100%; display: block; }
    ══════════════════════════════ */
 @media (max-width: 768px) {
   /* Nav */
-  .nav         { padding: 16px 20px; }
+  .nav-inner   { padding: 16px 20px; }
   .nav-links   { display: none; }
   .nav-actions { display: none; }
   .nav-hamburger { display: flex; }
