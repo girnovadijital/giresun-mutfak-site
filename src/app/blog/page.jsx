@@ -30,7 +30,7 @@ const posts = [
   {
     cat: 'Tasarım',
     title: 'Küçük Mutfaklarda Depolama Kapasitesini İkiye Katlayan 6 Çözüm',
-    excerpt: 'Ada modülü şart değil. Doğru çekmece, köşe dolabı ve raf sistemiyle 8 m²'ye çok şey sığar.',
+    excerpt: "Ada modülü şart değil. Doğru çekmece, köşe dolabı ve raf sistemiyle 8 m²'ye çok şey sığar.",
     date: 'Şubat 2025',
     readTime: '6 dk',
     large: false,
