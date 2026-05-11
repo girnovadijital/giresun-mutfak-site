@@ -8,7 +8,6 @@ import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
 import { ArrowIcon } from '@/components/Icons'
 import { notFound } from 'next/navigation'
-import Placeholder from '@/components/Placeholder'
 
 function formatDate(iso) {
   if (!iso) return ''
