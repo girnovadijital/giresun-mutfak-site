@@ -15,9 +15,11 @@ const links = [
   { href: '/iletisim',   label: 'İletişim' },
 ]
 
-export default function NavBar() {
+export default function NavBar({ settings }) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const phone    = settings?.phone    || '+90 454 000 00 00'
+  const whatsapp = settings?.whatsapp || '904540000000'
 
   return (
     <>
@@ -36,7 +38,7 @@ export default function NavBar() {
 
           {/* Desktop sağ taraf */}
           <div className="nav-actions">
-            <span className="mono" style={{ fontSize: 12, color: 'var(--c-mute)' }}>+90 454 000 00 00</span>
+            <span className="mono" style={{ fontSize: 12, color: 'var(--c-mute)' }}>{phone}</span>
             <Link href="/iletisim" className="btn btn-ink">
               Ücretsiz Keşif <ArrowIcon />
             </Link>
@@ -70,14 +72,14 @@ export default function NavBar() {
             style={{ justifyContent: 'center', padding: '16px 24px' }}>
             Ücretsiz Keşif Al <ArrowIcon />
           </Link>
-          <a href="https://wa.me/904540000000" target="_blank" rel="noopener noreferrer"
+          <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer"
             className="btn btn-wa" style={{ justifyContent: 'center', padding: '16px 24px' }}>
             WhatsApp'tan Yaz
           </a>
         </div>
 
         <div style={{ marginTop: 'auto', paddingTop: 32, borderTop: '1px solid var(--c-line)', fontSize: 13, color: 'var(--c-mute)' }}>
-          +90 454 000 00 00
+          {phone}
         </div>
       </div>
     </>

@@ -16,23 +16,24 @@ const FALLBACK_HERO_IMAGES = [
 
 export default async function HomePage() {
   let testimonials: any[] = []
-  let heroImages: string[] = []
+  let settings: any = null
 
   try {
-    const [t, settings] = await Promise.all([
+    const [t, s] = await Promise.all([
       client.fetch(testimonialsQuery),
       client.fetch(settingsQuery),
     ])
     testimonials = t || []
-    heroImages = settings?.heroImages?.filter(Boolean) || []
-  } catch {
-    // Sanity bağlantısı yoksa fallback kullan
-  }
+    settings = s
+  } catch {}
+
+  const heroImages = settings?.heroImages?.filter(Boolean)
 
   return (
     <HomeClient
       testimonials={testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS}
-      heroImages={heroImages.length > 0 ? heroImages : FALLBACK_HERO_IMAGES}
+      heroImages={heroImages?.length > 0 ? heroImages : FALLBACK_HERO_IMAGES}
+      settings={settings}
     />
   )
 }

@@ -33,10 +33,8 @@ function HeroSlider({ images }: { images: string[] }) {
           }}
         />
       ))}
-
       {images.length > 1 && (
         <>
-          {/* Sol ok */}
           <button onClick={prev} aria-label="Önceki" style={{
             position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)',
             width: 40, height: 40, borderRadius: 999, border: 'none',
@@ -44,12 +42,8 @@ function HeroSlider({ images }: { images: string[] }) {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
           }}>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M12 7H2M6 11L2 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7H2M6 11L2 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
-
-          {/* Sağ ok */}
           <button onClick={next} aria-label="Sonraki" style={{
             position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
             width: 40, height: 40, borderRadius: 999, border: 'none',
@@ -57,12 +51,8 @@ function HeroSlider({ images }: { images: string[] }) {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
           }}>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
-
-          {/* Noktalar */}
           <div style={{
             position: 'absolute', bottom: 18, left: '50%', transform: 'translateX(-50%)',
             display: 'flex', gap: 8, zIndex: 2,
@@ -85,37 +75,49 @@ function HeroSlider({ images }: { images: string[] }) {
 }
 
 /* ── Hero ── */
-function HomeHero({ heroImages }: { heroImages: string[] }) {
+function HomeHero({ heroImages, s }: { heroImages: string[], s: any }) {
+  const eyebrow   = s?.heroEyebrow     || "Giresun · 2011'den beri"
+  const line1     = s?.heroLine1       || "Giresun'da"
+  const line2     = s?.heroLine2       || 'hayalinizdeki'
+  const highlight = s?.heroHighlight   || 'mutfağı'
+  const suffix    = s?.heroLine3Suffix || 'tasarlıyoruz.'
+  const subtitle  = s?.heroSubtitle    || "Ölçü alımından montaja kadar tek elden, ustalıkla. Özel tasarım mutfak dolapları, tadilat ve anahtar teslim projeler — Karadeniz'in iklimine ve evinize göre."
+  const cta1      = s?.heroCta1        || "WhatsApp'tan Yaz"
+  const cta2      = s?.heroCta2        || 'Ücretsiz Keşif Al'
+  const whatsapp  = s?.whatsapp        || '904540000000'
+  const stats     = s?.heroStats?.length > 0
+    ? s.heroStats
+    : [{ value: '500+', label: 'teslim mutfak' }, { value: '14 yıl', label: 'ustalık' }, { value: '2 yıl', label: 'garanti' }]
+
   return (
     <section>
       <div className="mxw g-hero">
         <div className="g-hero-txt">
           <div className="eyebrow" style={{ marginBottom: 28 }}>
             <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--c-mute)', verticalAlign: 'middle', marginRight: 12 }} />
-            Giresun · 2011'den beri
+            {eyebrow}
           </div>
           <h1 className="display t-hero">
-            Giresun'da<br />
-            hayalinizdeki<br />
-            <span className="h-script" style={{ color: 'var(--c-wood-deep)' }}>mutfağı</span> tasarlıyoruz.
+            {line1}<br />
+            {line2}<br />
+            <span className="h-script" style={{ color: 'var(--c-wood-deep)' }}>{highlight}</span> {suffix}
           </h1>
           <p style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--c-ink-soft)', maxWidth: 440, marginBottom: 36 }}>
-            Ölçü alımından montaja kadar tek elden, ustalıkla. Özel tasarım mutfak dolapları,
-            tadilat ve anahtar teslim projeler — Karadeniz'in iklimine ve evinize göre.
+            {subtitle}
           </p>
           <div style={{ display: 'flex', gap: 12, marginBottom: 36, flexWrap: 'wrap' }}>
-            <a href="https://wa.me/904540000000" target="_blank" rel="noopener noreferrer" className="btn btn-wa">
-              <WhatsAppIcon size={18} /> WhatsApp'tan Yaz
+            <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="btn btn-wa">
+              <WhatsAppIcon size={18} /> {cta1}
             </a>
             <Link href="/iletisim" className="btn btn-ghost">
-              Ücretsiz Keşif Al <ArrowIcon />
+              {cta2} <ArrowIcon />
             </Link>
           </div>
           <div style={{ display: 'flex', gap: 32, paddingTop: 28, borderTop: '1px solid var(--c-line)' }}>
-            {[['500+', 'teslim mutfak'], ['14 yıl', 'ustalık'], ['2 yıl', 'garanti']].map(([n, l]) => (
-              <div key={l}>
-                <div className="serif" style={{ fontSize: 22 }}>{n}</div>
-                <div className="muted" style={{ fontSize: 11 }}>{l}</div>
+            {stats.map((st: any, i: number) => (
+              <div key={i}>
+                <div className="serif" style={{ fontSize: 22 }}>{st.value}</div>
+                <div className="muted" style={{ fontSize: 11 }}>{st.label}</div>
               </div>
             ))}
           </div>
@@ -129,13 +131,15 @@ function HomeHero({ heroImages }: { heroImages: string[] }) {
 }
 
 /* ── Hizmetler ── */
-function ServicesSection() {
-  const services = [
-    { n: '01', t: 'Mutfak Dolabı',   d: 'Akrilik, lake, MDF kaplama; çekmece sistemleri Hettich ve Blum.', tag: 'En çok tercih edilen' },
-    { n: '02', t: 'Mutfak Tadilatı', d: 'Eski mutfağınızı söküyor, tesisat-elektrik dahil yeniliyoruz.',    tag: '' },
-    { n: '03', t: 'Özel Tasarım',    d: 'Mimar eşliğinde 3D render; her ölçüye, her mekâna özel çözüm.',   tag: '' },
-    { n: '04', t: 'Anahtar Teslim',  d: 'Banyo, dolap, dahili — tüm proje tek sözleşme, tek bütçe.',        tag: '' },
+function ServicesSection({ s }: { s: any }) {
+  const FALLBACK = [
+    { title: 'Mutfak Dolabı',   description: 'Akrilik, lake, MDF kaplama; çekmece sistemleri Hettich ve Blum.', tag: 'En çok tercih edilen' },
+    { title: 'Mutfak Tadilatı', description: 'Eski mutfağınızı söküyor, tesisat-elektrik dahil yeniliyoruz.',    tag: '' },
+    { title: 'Özel Tasarım',    description: 'Mimar eşliğinde 3D render; her ölçüye, her mekâna özel çözüm.',   tag: '' },
+    { title: 'Anahtar Teslim',  description: 'Banyo, dolap, dahili — tüm proje tek sözleşme, tek bütçe.',        tag: '' },
   ]
+  const services = s?.services?.length > 0 ? s.services : FALLBACK
+
   return (
     <section className="s-xl">
       <div className="mxw">
@@ -151,20 +155,22 @@ function ServicesSection() {
           </Link>
         </div>
         <div className="g-4">
-          {services.map((s, i) => (
+          {services.map((sv: any, i: number) => (
             <div key={i} style={{
               paddingTop: 32, paddingBottom: 32,
               paddingLeft: i === 0 ? 0 : 24, paddingRight: 24,
               borderBottom: '1px solid var(--c-line)',
-              borderRight: i < 3 ? '1px solid var(--c-line)' : 'none',
-              display: 'flex', flexDirection: 'column', gap: 16, minHeight: 280,
+              borderRight: i < services.length - 1 ? '1px solid var(--c-line)' : 'none',
+              display: 'flex', flexDirection: 'column', gap: 16, minHeight: 260,
             }}>
-              <div className="mono" style={{ color: 'var(--c-mute)', fontSize: 11, letterSpacing: '0.1em' }}>{s.n}</div>
-              <div className="display" style={{ fontSize: 28 }}>{s.t}</div>
-              <p className="muted" style={{ fontSize: 14, flex: 1 }}>{s.d}</p>
-              {s.tag && (
+              <div className="mono" style={{ color: 'var(--c-mute)', fontSize: 11, letterSpacing: '0.1em' }}>
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <div className="display" style={{ fontSize: 28 }}>{sv.title}</div>
+              <p className="muted" style={{ fontSize: 14, flex: 1 }}>{sv.description}</p>
+              {sv.tag && (
                 <div style={{ fontSize: 11, fontFamily: 'var(--f-mono)', letterSpacing: '0.06em', color: 'var(--c-wood-deep)', textTransform: 'uppercase' }}>
-                  · {s.tag}
+                  · {sv.tag}
                 </div>
               )}
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 500 }}>
@@ -224,37 +230,41 @@ function ProjectShowcase() {
 }
 
 /* ── Süreç ── */
-function ProcessSection() {
-  const steps = [
-    { n: '01', t: 'Ücretsiz keşif',  d: 'Adresinize geliyoruz, ölçü alıp ihtiyacınızı dinliyoruz.' },
-    { n: '02', t: '3D tasarım',      d: 'Renk, malzeme ve donanımı 3D render üzerinde birlikte seçiyoruz.' },
-    { n: '03', t: 'Üretim',          d: "Giresun atölyemizde, mimarın onayıyla üretim başlıyor." },
-    { n: '04', t: 'Montaj & teslim', d: '5–14 gün içinde montaj. 2 yıl işçilik garantisi.' },
+function ProcessSection({ s }: { s: any }) {
+  const FALLBACK_STEPS = [
+    { title: 'Ücretsiz keşif',  description: 'Adresinize geliyoruz, ölçü alıp ihtiyacınızı dinliyoruz.' },
+    { title: '3D tasarım',      description: 'Renk, malzeme ve donanımı 3D render üzerinde birlikte seçiyoruz.' },
+    { title: 'Üretim',          description: "Giresun atölyemizde, mimarın onayıyla üretim başlıyor." },
+    { title: 'Montaj & teslim', description: '5–14 gün içinde montaj. 2 yıl işçilik garantisi.' },
   ]
+  const title    = s?.processTitle    || 'İlk konuşmadan teslime kadar.'
+  const subtitle = s?.processSubtitle || 'Her aşamada size bir kontak kişi atanır. Şantiyeyi WhatsApp\'tan canlı takip edebilirsiniz.'
+  const steps    = s?.processSteps?.length > 0 ? s.processSteps : FALLBACK_STEPS
+
   return (
     <section className="s-xl">
       <div className="mxw">
         <div className="g-process">
           <div className="process-sticky">
             <div className="eyebrow" style={{ marginBottom: 16 }}>Süreç</div>
-            <h2 className="display t-h2" style={{ marginBottom: 24 }}>İlk konuşmadan<br /> teslime kadar.</h2>
-            <p className="muted" style={{ fontSize: 15, maxWidth: 380, marginBottom: 32 }}>
-              Her aşamada size bir kontak kişi atanır. Şantiyeyi WhatsApp'tan canlı takip edebilirsiniz.
-            </p>
+            <h2 className="display t-h2" style={{ marginBottom: 24 }}>{title}</h2>
+            <p className="muted" style={{ fontSize: 15, maxWidth: 380, marginBottom: 32 }}>{subtitle}</p>
             <Link href="/iletisim" className="btn btn-ink">Süreci başlatın <ArrowIcon /></Link>
           </div>
           <div>
-            {steps.map((s, i) => (
+            {steps.map((step: any, i: number) => (
               <div key={i} style={{
                 display: 'grid', gridTemplateColumns: '60px 1fr', gap: 24,
                 padding: '32px 0',
                 borderTop: '1px solid var(--c-line)',
                 borderBottom: i === steps.length - 1 ? '1px solid var(--c-line)' : 'none',
               }}>
-                <div className="mono" style={{ color: 'var(--c-wood-deep)', fontSize: 12, letterSpacing: '0.1em', paddingTop: 4 }}>{s.n}</div>
+                <div className="mono" style={{ color: 'var(--c-wood-deep)', fontSize: 12, letterSpacing: '0.1em', paddingTop: 4 }}>
+                  {String(i + 1).padStart(2, '0')}
+                </div>
                 <div>
-                  <div className="display" style={{ fontSize: 32, marginBottom: 10 }}>{s.t}</div>
-                  <p className="muted" style={{ fontSize: 15, maxWidth: 480 }}>{s.d}</p>
+                  <div className="display" style={{ fontSize: 32, marginBottom: 10 }}>{step.title}</div>
+                  <p className="muted" style={{ fontSize: 15, maxWidth: 480 }}>{step.description}</p>
                 </div>
               </div>
             ))}
@@ -284,13 +294,9 @@ function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
                   </svg>
                 ))}
               </div>
-              <p className="serif" style={{ fontSize: 20, lineHeight: 1.4, marginBottom: 32, color: '#fff' }}>
-                "{t.quote}"
-              </p>
+              <p className="serif" style={{ fontSize: 20, lineHeight: 1.4, marginBottom: 32, color: '#fff' }}>"{t.quote}"</p>
               <div style={{ fontSize: 13, opacity: 0.85 }}>{t.name}</div>
-              <div className="mono" style={{ fontSize: 11, opacity: 0.55, marginTop: 4 }}>
-                {(t.location || '').toUpperCase()}
-              </div>
+              <div className="mono" style={{ fontSize: 11, opacity: 0.55, marginTop: 4 }}>{(t.location || '').toUpperCase()}</div>
             </div>
           ))}
         </div>
@@ -300,14 +306,18 @@ function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
 }
 
 /* ── Ana Sayfa ── */
-export default function HomeClient({ testimonials, heroImages }: { testimonials: any[], heroImages: string[] }) {
+export default function HomeClient({ testimonials, heroImages, settings }: {
+  testimonials: any[]
+  heroImages: string[]
+  settings: any
+}) {
   return (
     <div className="page">
-      <NavBar />
-      <HomeHero heroImages={heroImages} />
-      <ServicesSection />
+      <NavBar settings={settings} />
+      <HomeHero heroImages={heroImages} s={settings} />
+      <ServicesSection s={settings} />
       <ProjectShowcase />
-      <ProcessSection />
+      <ProcessSection s={settings} />
       <TestimonialsSection testimonials={testimonials} />
       <CtaBand />
       <Footer />
