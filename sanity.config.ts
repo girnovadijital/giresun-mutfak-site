@@ -23,6 +23,9 @@ export default defineConfig({
             S.listItem().title('Müşteri Yorumları').schemaType('testimonial').child(
               S.documentTypeList('testimonial').title('Yorumlar')
             ),
+            S.listItem().title('Blog Yazıları').schemaType('post').child(
+              S.documentTypeList('post').title('Blog Yazıları')
+            ),
             S.divider(),
             S.listItem().title('Site Ayarları').schemaType('settings').child(
               S.documentTypeList('settings').title('Ayarlar')

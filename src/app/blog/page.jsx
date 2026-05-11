@@ -1,63 +1,51 @@
 import NavBar from '@/components/NavBar'
 import Footer from '@/components/Footer'
+import CtaBand from '@/components/CtaBand'
 import Placeholder from '@/components/Placeholder'
 import { ArrowIcon } from '@/components/Icons'
 import Link from 'next/link'
+import { client } from '@/sanity/lib/client'
+import { postsQuery, settingsQuery } from '@/sanity/lib/queries'
 
 export const metadata = {
   title: 'Blog — Giresun Mutfak',
   description: 'Mutfak tasarımı, malzeme seçimi ve tadilat rehberleri. Giresun Mutfak uzmanlarından ipuçları.',
 }
 
-const posts = [
-  {
-    cat: 'Malzeme',
-    title: 'Akrilik mi, Lake mi? Mutfak Dolabı Kapağı Seçerken Bilmeniz Gerekenler',
-    excerpt: 'İkisi de parlak, ikisi de modern görünüyor — ama bakımı, dayanıklılığı ve fiyatı çok farklı. Karadeniz iklimine hangisi daha uygun?',
-    date: 'Nisan 2025',
-    readTime: '5 dk',
-    src: 'https://images.unsplash.com/photo-1764526624453-db32c24eca55?auto=format&fit=crop&w=1200&q=80',
-  },
-  {
-    cat: 'Tadilat',
-    title: 'Mutfak Tadilatına Başlamadan Önce Sormanız Gereken 7 Soru',
-    excerpt: 'Tesisat dahil mi? Elektrik yeterliliği kontrol edildi mi? Süre gerçekçi mi? Pişmanlıkları önleyecek sorular.',
-    date: 'Mart 2025',
-    readTime: '4 dk',
-    src: 'https://images.unsplash.com/photo-1602028617950-0ed35e50e460?auto=format&fit=crop&w=700&q=80',
-  },
-  {
-    cat: 'Tasarım',
-    title: 'Küçük Mutfaklarda Depolama Kapasitesini İkiye Katlayan 6 Çözüm',
-    excerpt: "Ada modülü şart değil. Doğru çekmece, köşe dolabı ve raf sistemiyle 8 m²'ye çok şey sığar.",
-    date: 'Şubat 2025',
-    readTime: '6 dk',
-    src: 'https://images.unsplash.com/photo-1593136573819-c3b57b8caf29?auto=format&fit=crop&w=700&q=80',
-  },
-  {
-    cat: 'Malzeme',
-    title: 'Tezgâh Malzemesi Rehberi: Granit, Kompak ve Laminat Karşılaştırması',
-    excerpt: 'Fiyat, hijyen, ısıya dayanıklılık ve bakım açısından üç popüler tezgâh malzemesini karşılaştırıyoruz.',
-    date: 'Ocak 2025',
-    readTime: '7 dk',
-    src: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=700&q=80',
-  },
-  {
-    cat: 'İlham',
-    title: '2025 Mutfak Renk Trendleri: Karadeniz Evlerine Uygulananlar',
-    excerpt: 'Zeytini, antrasit, krem ve orman yeşili — bu yıl öne çıkan renk paletlerini gerçek projelerle inceliyoruz.',
-    date: 'Ocak 2025',
-    readTime: '4 dk',
-    src: 'https://images.unsplash.com/photo-1759239572496-4ec13e7643d6?auto=format&fit=crop&w=700&q=80',
-  },
+const FALLBACK_POSTS = [
+  { _id: '1', slug: 'akrilik-lake-kapi-secimi',        category: 'Malzeme', featured: true,  readTime: '5 dk', publishedAt: '2025-04-01', imageUrl: 'https://images.unsplash.com/photo-1764526624453-db32c24eca55?auto=format&fit=crop&w=1200&q=80', title: 'Akrilik mi, Lake mi? Mutfak Dolabı Kapağı Seçerken Bilmeniz Gerekenler', excerpt: 'İkisi de parlak, ikisi de modern görünüyor — ama bakımı, dayanıklılığı ve fiyatı çok farklı. Karadeniz iklimine hangisi daha uygun?' },
+  { _id: '2', slug: 'tadilat-oncesi-7-soru',           category: 'Tadilat', featured: false, readTime: '4 dk', publishedAt: '2025-03-01', imageUrl: 'https://images.unsplash.com/photo-1602028617950-0ed35e50e460?auto=format&fit=crop&w=700&q=80',  title: 'Mutfak Tadilatına Başlamadan Önce Sormanız Gereken 7 Soru', excerpt: 'Tesisat dahil mi? Elektrik yeterliliği kontrol edildi mi? Süre gerçekçi mi? Pişmanlıkları önleyecek sorular.' },
+  { _id: '3', slug: 'kucuk-mutfak-depolama',           category: 'Tasarım', featured: false, readTime: '6 dk', publishedAt: '2025-02-01', imageUrl: 'https://images.unsplash.com/photo-1593136573819-c3b57b8caf29?auto=format&fit=crop&w=700&q=80',  title: "Küçük Mutfaklarda Depolama Kapasitesini İkiye Katlayan 6 Çözüm", excerpt: "Ada modülü şart değil. Doğru çekmece, köşe dolabı ve raf sistemiyle 8 m²'ye çok şey sığar." },
+  { _id: '4', slug: 'tezgah-malzemesi-rehberi',        category: 'Malzeme', featured: false, readTime: '7 dk', publishedAt: '2025-01-15', imageUrl: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=700&q=80',  title: 'Tezgâh Malzemesi Rehberi: Granit, Kompak ve Laminat Karşılaştırması', excerpt: 'Fiyat, hijyen, ısıya dayanıklılık ve bakım açısından üç popüler tezgâh malzemesini karşılaştırıyoruz.' },
+  { _id: '5', slug: '2025-mutfak-renk-trendleri',      category: 'İlham',   featured: false, readTime: '4 dk', publishedAt: '2025-01-01', imageUrl: 'https://images.unsplash.com/photo-1759239572496-4ec13e7643d6?auto=format&fit=crop&w=700&q=80',  title: '2025 Mutfak Renk Trendleri: Karadeniz Evlerine Uygulananlar', excerpt: 'Zeytini, antrasit, krem ve orman yeşili — bu yıl öne çıkan renk paletlerini gerçek projelerle inceliyoruz.' },
 ]
 
-export default function BlogPage() {
-  const [featured, ...rest] = posts
+function formatDate(iso) {
+  if (!iso) return ''
+  const d = new Date(iso)
+  return d.toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' })
+}
+
+export default async function BlogPage() {
+  let posts = []
+  let settings = null
+
+  try {
+    const [p, s] = await Promise.all([
+      client.fetch(postsQuery),
+      client.fetch(settingsQuery),
+    ])
+    posts = p || []
+    settings = s
+  } catch {}
+
+  const allPosts = posts.length > 0 ? posts : FALLBACK_POSTS
+  const featured = allPosts.find(p => p.featured) || allPosts[0]
+  const rest = allPosts.filter(p => p._id !== featured._id)
 
   return (
     <div className="page">
-      <NavBar />
+      <NavBar settings={settings} />
 
       {/* Başlık */}
       <section className="s-lg">
@@ -71,24 +59,19 @@ export default function BlogPage() {
       </section>
 
       {/* Öne çıkan yazı */}
-      <section style={{ paddingBottom: 0 }}>
-        <div className="mxw" style={{ padding: '0 0 56px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 56, alignItems: 'center', borderTop: '1px solid var(--c-line)', paddingTop: 56 }}>
-            <Placeholder
-              label={featured.title}
-              src={featured.src}
-              style={{ height: 480, borderRadius: 4 }}
-            />
+      <section>
+        <div className="mxw" style={{ paddingBottom: 64, borderTop: '1px solid var(--c-line)', paddingTop: 56 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 56, alignItems: 'center' }}>
+            <Placeholder label={featured.title} src={featured.imageUrl} style={{ height: 480, borderRadius: 4 }} />
             <div>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 20 }}>
-                <span className="eyebrow">{featured.cat}</span>
-                <span className="muted" style={{ fontSize: 12 }}>·</span>
-                <span className="mono muted" style={{ fontSize: 11 }}>{featured.date}</span>
+                <span className="eyebrow">{featured.category}</span>
+                <span className="mono muted" style={{ fontSize: 11 }}>· {formatDate(featured.publishedAt)}</span>
                 <span className="mono muted" style={{ fontSize: 11 }}>· {featured.readTime}</span>
               </div>
               <h2 className="display" style={{ fontSize: 36, lineHeight: 1.1, marginBottom: 20 }}>{featured.title}</h2>
               <p style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--c-ink-soft)', marginBottom: 32 }}>{featured.excerpt}</p>
-              <Link href="/blog/akrilik-lake-kapi-secimi" className="btn btn-ink">
+              <Link href={`/blog/${featured.slug}`} className="btn btn-ink">
                 Devamını Oku <ArrowIcon />
               </Link>
             </div>
@@ -101,16 +84,13 @@ export default function BlogPage() {
         <div className="mxw">
           <div className="eyebrow" style={{ marginBottom: 40 }}>Son Yazılar</div>
           <div className="g-2" style={{ gap: 48 }}>
-            {rest.map((p, i) => (
-              <div key={i} style={{ borderTop: '1px solid var(--c-line)', paddingTop: 32 }}>
-                <Placeholder
-                  label={p.title}
-                  src={p.src}
-                  style={{ height: 220, borderRadius: 4, marginBottom: 20 }}
-                />
+            {rest.map((p) => (
+              <Link key={p._id} href={`/blog/${p.slug}`}
+                style={{ borderTop: '1px solid var(--c-line)', paddingTop: 32, display: 'block', textDecoration: 'none' }}>
+                <Placeholder label={p.title} src={p.imageUrl} style={{ height: 220, borderRadius: 4, marginBottom: 20 }} />
                 <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 12 }}>
-                  <span className="eyebrow">{p.cat}</span>
-                  <span className="mono muted" style={{ fontSize: 11 }}>· {p.date}</span>
+                  <span className="eyebrow">{p.category}</span>
+                  <span className="mono muted" style={{ fontSize: 11 }}>· {formatDate(p.publishedAt)}</span>
                   <span className="mono muted" style={{ fontSize: 11 }}>· {p.readTime}</span>
                 </div>
                 <h3 className="display" style={{ fontSize: 24, lineHeight: 1.15, marginBottom: 12 }}>{p.title}</h3>
@@ -118,40 +98,13 @@ export default function BlogPage() {
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 500 }}>
                   Oku <ArrowIcon />
                 </span>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Bülten */}
-      <section className="s-xl" style={{ background: 'var(--c-paper-2)' }}>
-        <div className="mxw-sm" style={{ textAlign: 'center' }}>
-          <div className="eyebrow" style={{ marginBottom: 16 }}>Bülten</div>
-          <h2 className="display t-h2" style={{ marginBottom: 20 }}>
-            Yeni yazıları kaçırmayın.
-          </h2>
-          <p className="muted" style={{ fontSize: 16, marginBottom: 36 }}>
-            Ayda bir, mutfak tasarımı ve tadilat hakkında pratik bilgiler.
-          </p>
-          <div style={{ display: 'flex', gap: 8, maxWidth: 440, margin: '0 auto', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <input
-              type="email"
-              placeholder="e-posta adresiniz"
-              style={{
-                flex: 1, minWidth: 220, padding: '14px 18px', fontSize: 14,
-                border: '1px solid var(--c-line)', borderRadius: 4,
-                background: 'var(--c-paper)', fontFamily: 'inherit', outline: 'none',
-              }}
-            />
-            <button className="btn btn-ink">Abone Ol</button>
-          </div>
-          <p className="mono muted" style={{ fontSize: 11, marginTop: 16, letterSpacing: '0.06em' }}>
-            SPAM YOK · İSTEDİĞİNİZDE ÇIKIN
-          </p>
-        </div>
-      </section>
-
+      <CtaBand />
       <Footer />
     </div>
   )

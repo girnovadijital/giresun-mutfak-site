@@ -33,6 +33,34 @@ export const testimonialsQuery = groq`
   }
 `
 
+export const postsQuery = groq`
+  *[_type == "post"] | order(publishedAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    category,
+    excerpt,
+    publishedAt,
+    readTime,
+    featured,
+    "imageUrl": coverImage.asset->url
+  }
+`
+
+export const postBySlugQuery = groq`
+  *[_type == "post" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    category,
+    excerpt,
+    publishedAt,
+    readTime,
+    "imageUrl": coverImage.asset->url,
+    content
+  }
+`
+
 export const settingsQuery = groq`
   *[_type == "settings"][0] {
     phone,
