@@ -1,10 +1,17 @@
+'use client'
+
+import { useState } from 'react'
+
 export default function Placeholder({ label, dark = false, wood = false, style = {}, src = '' }) {
-  if (src) {
+  const [failed, setFailed] = useState(false)
+
+  if (src && !failed) {
     return (
       <img
         src={src}
         alt={label || ''}
         style={{ objectFit: 'cover', display: 'block', width: '100%', ...style }}
+        onError={() => setFailed(true)}
       />
     )
   }

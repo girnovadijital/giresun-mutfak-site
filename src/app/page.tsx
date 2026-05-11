@@ -9,9 +9,9 @@ const FALLBACK_TESTIMONIALS = [
 ]
 
 const FALLBACK_HERO_IMAGES = [
-  'https://images.unsplash.com/photo-1764526624453-db32c24eca55?auto=format&fit=crop&w=1200&q=80',
-  'https://images.unsplash.com/photo-1692133186528-c1c42edd5a5c?auto=format&fit=crop&w=1200&q=80',
-  'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1565538810643-b5bdb714032a?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1556909172-54557c7e4fb7?auto=format&fit=crop&w=1200&q=80',
 ]
 
 export default async function HomePage() {

@@ -8,6 +8,7 @@ import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
 import { ArrowIcon } from '@/components/Icons'
 import { notFound } from 'next/navigation'
+import Placeholder from '@/components/Placeholder'
 
 function formatDate(iso) {
   if (!iso) return ''
@@ -31,7 +32,7 @@ const ptComponents = {
   },
   types: {
     image: ({ value }) => value?.asset?.url ? (
-      <img src={value.asset.url} alt={value.alt || ''} style={{ width: '100%', borderRadius: 4, margin: '32px 0', display: 'block' }} />
+      <Placeholder src={value.asset.url} label={value.alt || ''} style={{ width: '100%', borderRadius: 4, margin: '32px 0', display: 'block' }} />
     ) : null,
   },
 }
@@ -79,7 +80,7 @@ export default async function BlogPostPage({ params }) {
       {post.imageUrl && (
         <section style={{ paddingBottom: 0 }}>
           <div className="mxw">
-            <img src={post.imageUrl} alt={post.title} style={{ width: '100%', height: 480, objectFit: 'cover', borderRadius: 4, display: 'block' }} />
+            <Placeholder src={post.imageUrl} label={post.title} style={{ width: '100%', height: 480, borderRadius: 4, display: 'block' }} />
           </div>
         </section>
       )}

@@ -11,29 +11,51 @@ import { WhatsAppIcon, ArrowIcon } from '@/components/Icons'
 /* ── Hero Slider ── */
 function HeroSlider({ images }: { images: string[] }) {
   const [cur, setCur] = useState(0)
+  const [failed, setFailed] = useState<Set<number>>(new Set())
+
+  const okImages = images.filter((_, i) => !failed.has(i))
+  const allFailed = images.length > 0 && failed.size >= images.length
 
   useEffect(() => {
-    if (images.length <= 1) return
+    if (okImages.length <= 1) return
     const t = setInterval(() => setCur(c => (c + 1) % images.length), 5000)
     return () => clearInterval(t)
-  }, [images.length])
+  }, [okImages.length, images.length])
 
+  const markFailed = (i: number) => setFailed(prev => { const s = new Set(prev); s.add(i); return s })
   const prev = () => setCur(c => (c - 1 + images.length) % images.length)
   const next = () => setCur(c => (c + 1) % images.length)
 
+  if (images.length === 0 || allFailed) {
+    return (
+      <div style={{
+        height: '100%', minHeight: 520, borderRadius: 4,
+        background: 'var(--c-paper-2)',
+        backgroundImage: 'repeating-linear-gradient(135deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 14px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        border: '1px solid var(--c-line)',
+      }}>
+        <div className="eyebrow" style={{ opacity: 0.5 }}>Giresun Mutfak</div>
+      </div>
+    )
+  }
+
+  const showDots = okImages.length > 1
+
   return (
-    <div style={{ position: 'relative', height: '100%', minHeight: 520, borderRadius: 4, overflow: 'hidden' }}>
+    <div style={{ position: 'relative', height: '100%', minHeight: 520, borderRadius: 4, overflow: 'hidden', background: 'var(--c-paper-2)' }}>
       {images.map((src, i) => (
         <img key={i} src={src} alt="Mutfak görseli"
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             objectFit: 'cover',
-            opacity: i === cur ? 1 : 0,
+            opacity: i === cur && !failed.has(i) ? 1 : 0,
             transition: 'opacity 700ms ease',
           }}
+          onError={() => markFailed(i)}
         />
       ))}
-      {images.length > 1 && (
+      {okImages.length > 1 && (
         <>
           <button onClick={prev} aria-label="Önceki" style={{
             position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)',
@@ -53,22 +75,24 @@ function HeroSlider({ images }: { images: string[] }) {
           }}>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
-          <div style={{
-            position: 'absolute', bottom: 18, left: '50%', transform: 'translateX(-50%)',
-            display: 'flex', gap: 8, zIndex: 2,
-          }}>
-            {images.map((_, i) => (
-              <button key={i} onClick={() => setCur(i)} aria-label={`Görsel ${i + 1}`}
-                style={{
-                  width: i === cur ? 28 : 8, height: 8, borderRadius: 999,
-                  background: i === cur ? '#fff' : 'rgba(255,255,255,0.55)',
-                  border: 'none', cursor: 'pointer', padding: 0,
-                  transition: 'all 350ms ease',
-                }}
-              />
-            ))}
-          </div>
         </>
+      )}
+      {showDots && (
+        <div style={{
+          position: 'absolute', bottom: 18, left: '50%', transform: 'translateX(-50%)',
+          display: 'flex', gap: 8, zIndex: 2,
+        }}>
+          {images.filter((_, i) => !failed.has(i)).map((_, idx) => (
+            <button key={idx} onClick={() => setCur(idx)} aria-label={`Görsel ${idx + 1}`}
+              style={{
+                width: idx === cur ? 28 : 8, height: 8, borderRadius: 999,
+                background: idx === cur ? '#fff' : 'rgba(255,255,255,0.55)',
+                border: 'none', cursor: 'pointer', padding: 0,
+                transition: 'all 350ms ease',
+              }}
+            />
+          ))}
+        </div>
       )}
     </div>
   )

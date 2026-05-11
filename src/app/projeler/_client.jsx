@@ -84,35 +84,20 @@ export default function ProjelerClient({ sanityProjects = [], fallbackProjects =
                 onMouseLeave={() => setHover(null)}
                 style={{ cursor: 'pointer' }}>
 
-                {/* Gerçek fotoğraf varsa göster, yoksa placeholder */}
-                {p.imageUrl ? (
-                  <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 2, marginBottom: 16 }}>
-                    <img
-                      src={p.imageUrl}
-                      alt={p.title}
-                      style={{
-                        width: '100%',
-                        height: p.large ? 540 : 380,
-                        objectFit: 'cover',
-                        display: 'block',
-                        transition: 'transform 400ms ease',
-                        transform: hover === p.id ? 'scale(1.03)' : 'scale(1)',
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <Placeholder
-                    label={p.label}
-                    wood={p.wood}
-                    dark={p.dark}
-                    style={{
-                      height: p.large ? 540 : 380,
-                      marginBottom: 16,
-                      transition: 'transform 400ms ease',
-                      transform: hover === p.id ? 'scale(1.01)' : 'scale(1)',
-                    }}
-                  />
-                )}
+                <Placeholder
+                  label={p.label}
+                  src={p.imageUrl || ''}
+                  wood={p.wood}
+                  dark={p.dark}
+                  style={{
+                    height: p.large ? 540 : 380,
+                    marginBottom: 16,
+                    transition: 'transform 400ms ease',
+                    transform: hover === p.id ? 'scale(1.03)' : 'scale(1)',
+                    borderRadius: 2,
+                    overflow: 'hidden',
+                  }}
+                />
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                   <div>
